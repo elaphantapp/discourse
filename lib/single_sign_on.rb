@@ -66,6 +66,7 @@ class SingleSignOn
     decoded = Base64.decode64(parsed["sso"])
     decoded_hash = Rack::Utils.parse_query(decoded)
 
+
     if sso.sign(parsed["sso"]) != parsed["sig"]
       diags = "\n\nsso: #{parsed["sso"]}\n\nsig: #{parsed["sig"]}\n\nexpected sig: #{sso.sign(parsed["sso"])}"
       if parsed["sso"] =~ /[^a-zA-Z0-9=\r\n\/+]/m
@@ -111,12 +112,13 @@ class SingleSignOn
 
   def sign(payload, secret = nil)
     secret = secret || sso_secret
+
     OpenSSL::HMAC.hexdigest("sha256", secret, payload)
   end
 
   def to_url(base_url = nil)
     base = "#{base_url || sso_url}"
-    "#{base}#{base.include?('?') ? '&' : '?'}#{payload}"
+    "#{base}%26RandomNumber=#{SecureRandom.random_number(10000000000)}#{base.include?('?') ? '&' : '?'}#{payload}"
   end
 
   def payload(secret = nil)
