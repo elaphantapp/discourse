@@ -134,7 +134,7 @@ class SessionController < ApplicationController
 
     elephantData = JSON.parse(elephantParams["Data"])
 
-    payload = "username=#{elephantData['DID']}&nonce=#{elephantData['RandomNumber']}&email=#{elephantData['EMail'] || elephantData['Email']}&external_id=#{elephantData['DID']}"
+    payload = "username=#{elephantData['Nickname'] || elephantData['DID']}&nonce=#{elephantData['RandomNumber']}&email=#{elephantData['EMail'] || elephantData['Email']}&external_id=#{elephantData['DID']}&require_activation=true"
 
     if "ieS74VZw8vP9AcnvkseyV9BXwR6m54L" == elephantData['DID']
       payload = "#{payload}&admin=true"
