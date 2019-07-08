@@ -118,7 +118,7 @@ class SingleSignOn
 
   def to_url(base_url = nil)
     base = "#{base_url || sso_url}"
-    "#{base}%26RandomNumber=#{SecureRandom.random_number(10000000000)}#{base.include?('?') ? '&' : '?'}#{payload}"
+    "#{base}%26RandomNumber=#{SecureRandom.random_number(10000000000)}#{base.include?('?') ? '&' : '?'}#{payload}&traceid=#{SecureRandom.random_number(10000000000)}"
   end
 
   def payload(secret = nil)
